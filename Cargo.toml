@@ -1,0 +1,72 @@
+
+[package]
+name = "nexcore-renderer"
+version = "1.0.0"
+edition = "2024"
+authors = ["NexVigilant Team <team@nexvigilant.com>"]
+license = "LicenseRef-Proprietary"
+description = "NexVigilant Browser - 100% Rust rendering engine"
+
+[[bin]]
+name = "nexbrowser"
+path = "src/main.rs"
+
+[[bin]]
+name = "nvos-desktop"
+path = "src/nvos_desktop.rs"
+
+[dependencies]
+# Window & GPU
+winit = "0.30"
+wgpu = "27"
+vello = "0.7"
+
+# HTML/CSS Parsing (from Servo)
+html5ever = "0.27"
+markup5ever_rcdom = "0.3"
+
+# Layout Engine
+taffy = "0.7"
+
+# Text Rendering
+cosmic-text = "0.12"
+
+# Image decoding (PNG, JPEG, WebP, GIF)
+image = { version = "0.25", default-features = false, features = ["png", "jpeg", "webp", "gif"] }
+
+# Networking
+reqwest = { version = "0.12", features = ["blocking", "rustls-tls"], default-features = false }
+url = "2"
+
+# Async runtime
+pollster = "0.4"
+
+# Prima language (template engine for nex:// pages)
+prima = { version = "0.1.0", path = "../prima", registry = "nexcore" }
+
+# Lex Primitiva grounding
+nexcore-lex-primitiva = { version = "0.1.0", path = "../nexcore-lex-primitiva", registry = "nexcore" }
+
+# Error handling
+nexcore-error = { workspace = true }
+
+# Logging
+tracing = { version = "0.1.40" }
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Utilities
+bytemuck = { version = "1", features = ["derive"] }
+
+# NVOS Desktop bridge (compositor → GPU renderer)
+nexcore-compositor = { workspace = true }
+nexcore-shell = { workspace = true }
+nexcore-os = { workspace = true }
+nexcore-pal = { workspace = true }
+nexcore-pal-linux = { workspace = true }
+
+[dev-dependencies]
+tempfile = { version = "3.10.1" }
+
+
+[lints]
+workspace = true

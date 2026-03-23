@@ -1,0 +1,135 @@
+{
+  "scan_timestamp": "2026-02-26T00:00:00Z",
+  "scope": "/home/matthew/Projects/nexcore/crates/nexcore-renderer",
+  "status": "PASS",
+  "summary": {
+    "critical": 1,
+    "high": 5,
+    "medium": 5,
+    "fixed": 11,
+    "deferred": 0
+  },
+  "findings": [
+    {
+      "id": 1,
+      "class": 3,
+      "class_name": "Documentation-Implementation Drift",
+      "severity": "CRITICAL",
+      "file": "/home/matthew/Projects/nexcore/crates/nexcore-renderer/src/net/adventure.rs",
+      "lines": "10",
+      "description": "TEMPLATE_PATH const baked developer machine absolute path (/home/matthew/nexcore/templates/adventure-hud.true) into source code. Path also referenced old location before repo move. nex://adventure page always silently fails on any other machine.",
+      "status": "fixed",
+      "deferral_reason": null
+    },
+    {
+      "id": 2,
+      "class": 7,
+      "class_name": "Dead Code",
+      "severity": "HIGH",
+      "file": "/home/matthew/Projects/nexcore/crates/nexcore-renderer/src/bridge.rs",
+      "lines": "470-474",
+      "description": "find_closing_brace used .find('}') which returns the first } in the slice — not the structurally matching } for the opening brace. Any nested JSON object causes silent data truncation.",
+      "status": "fixed",
+      "deferral_reason": null
+    },
+    {
+      "id": 3,
+      "class": 7,
+      "class_name": "Dead Code",
+      "severity": "HIGH",
+      "file": "/home/matthew/Projects/nexcore/crates/nexcore-renderer/src/content/mod.rs",
+      "lines": "111-118",
+      "description": "InternalRenderer::viewport() returned hardcoded 1280x720 regardless of actual window size. Browser resizes were invisible to ContentRenderer consumers.",
+      "status": "fixed",
+      "deferral_reason": null
+    },
+    {
+      "id": 4,
+      "class": 3,
+      "class_name": "Documentation-Implementation Drift",
+      "severity": "HIGH",
+      "file": "/home/matthew/Projects/nexcore/crates/nexcore-renderer/tests/visual/visual-regression.sh",
+      "lines": "22",
+      "description": "Visual regression harness hardcoded /home/matthew/nexcore/target/debug/nexbrowser — wrong path after repo move and non-portable across machines. Script silently exited without running any tests.",
+      "status": "fixed",
+      "deferral_reason": null
+    },
+    {
+      "id": 5,
+      "class": 7,
+      "class_name": "Dead Code",
+      "severity": "HIGH",
+      "file": "/home/matthew/Projects/nexcore/crates/nexcore-renderer/src/state.rs",
+      "lines": "96, 240",
+      "description": "Message::IntegrateLearning was defined and matched but fell through to Effect::None — external learnings were silently discarded without updating the GROUNDED loop context.",
+      "status": "fixed",
+      "deferral_reason": null
+    },
+    {
+      "id": 6,
+      "class": 7,
+      "class_name": "Dead Code",
+      "severity": "HIGH",
+      "file": "/home/matthew/Projects/nexcore/crates/nexcore-renderer/src/debug_server.rs",
+      "lines": "13",
+      "description": "use std::sync::mpsc imported but never referenced in the file. Synchronization uses Mutex+Condvar directly.",
+      "status": "fixed",
+      "deferral_reason": null
+    },
+    {
+      "id": 7,
+      "class": 7,
+      "class_name": "Dead Code",
+      "severity": "MEDIUM",
+      "file": "/home/matthew/Projects/nexcore/crates/nexcore-renderer/src/gpu/gpu_text.rs",
+      "lines": "26,49,64",
+      "description": "HashMap<fontdb::ID, CachedFont> used for font_cache. Workspace clippy.toml bans HashMap in favor of BTreeMap for deterministic iteration. fontdb::ID derives Ord so BTreeMap works directly.",
+      "status": "fixed",
+      "deferral_reason": null
+    },
+    {
+      "id": 8,
+      "class": 7,
+      "class_name": "Dead Code",
+      "severity": "MEDIUM",
+      "file": "/home/matthew/Projects/nexcore/crates/nexcore-renderer/src/paint/image.rs",
+      "lines": "21,123,131,154,158,166,170",
+      "description": "HashMap<String, CacheEntry> and HashMap<String, u32> used for ImageCache entries and failed URL tracking. Replaced with BTreeMap.",
+      "status": "fixed",
+      "deferral_reason": null
+    },
+    {
+      "id": 9,
+      "class": 7,
+      "class_name": "Dead Code",
+      "severity": "MEDIUM",
+      "file": "/home/matthew/Projects/nexcore/crates/nexcore-renderer/src/style/mod.rs",
+      "lines": "12,528",
+      "description": "HashMap used for Rule::declarations. Also propagated to style/selector.rs, style/cascade.rs (test helpers), and dom/mod.rs (element attrs). All replaced with BTreeMap.",
+      "status": "fixed",
+      "deferral_reason": null
+    },
+    {
+      "id": 10,
+      "class": 7,
+      "class_name": "Dead Code",
+      "severity": "MEDIUM",
+      "file": "/home/matthew/Projects/nexcore/crates/nexcore-renderer/src/paint/mod.rs",
+      "lines": "380",
+      "description": "std::collections::HashSet used for deduplication in collect_image_urls. Replaced with BTreeSet.",
+      "status": "fixed",
+      "deferral_reason": null
+    },
+    {
+      "id": 11,
+      "class": 7,
+      "class_name": "Dead Code",
+      "severity": "MEDIUM",
+      "file": "/home/matthew/Projects/nexcore/crates/nexcore-renderer/Cargo.lock",
+      "lines": "1-end",
+      "description": "Stale per-crate Cargo.lock present in workspace member. Crate is included via workspace glob (crates/*) so workspace root Cargo.lock governs. Orphan lock file was source of confusion.",
+      "status": "fixed",
+      "deferral_reason": null
+    }
+  ]
+}
